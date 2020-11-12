@@ -44,6 +44,13 @@ public class Main {
         personas.imprimirListadoEnConsola();
         System.out.println("");
         telefonos.imprimirListadoEnConsola();
+        System.out.println("");
+        
+        Persona p5 = new Persona();
+        p5.setId(5);
+        
+        
+        
         
     }
     

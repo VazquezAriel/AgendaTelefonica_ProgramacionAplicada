@@ -5,7 +5,6 @@
  */
 package ec.edu.ups.modelo;
 
-import ec.edu.ups.controlador.ControladorTelefono;
 
 /**
  *
@@ -21,12 +20,6 @@ public class Persona {
     private Telefono telefono;
 
     public Persona() {
-        this.id = -1;
-        this.cedula = "";
-        this.nombre = "";
-        this.apellido = "";
-        this.direccion = "";
-        this.telefono = new Telefono();
         
     }
 
@@ -89,7 +82,7 @@ public class Persona {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + this.id;
+        hash = 79 * hash + this.id;
         return hash;
     }
 
@@ -110,10 +103,9 @@ public class Persona {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "Persona{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + '}';
+        return "Persona{" + "id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
-    
 }

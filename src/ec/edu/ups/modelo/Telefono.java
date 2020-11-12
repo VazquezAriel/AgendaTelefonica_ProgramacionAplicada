@@ -18,10 +18,6 @@ public class Telefono {
     private String tipo;
 
     public Telefono() {
-        id = -1;
-        numero = "";
-        operadora = "";
-        tipo = "";
         
     }
 
@@ -88,10 +84,10 @@ public class Telefono {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return numero;
+        return "Telefono{" + "id=" + id + ", numero=" + numero + ", operadora=" + operadora + ", tipo=" + tipo + '}';
     }
     
 }

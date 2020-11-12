@@ -62,4 +62,8 @@ public abstract class AbstracControlador<T> {
     public void setListado(List<T> listado) {
         this.listado = listado;
     }
+    
+    public void imprimirListadoEnConsola() {
+        listado.forEach(System.out::println);
+    }
 }

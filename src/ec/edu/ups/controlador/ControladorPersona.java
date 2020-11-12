@@ -17,7 +17,7 @@ public class ControladorPersona extends AbstracControlador<Persona>{
 
     @Override
     public boolean validar(Persona persona) {
-        return (persona.getApellido().equals(persona.getNombre()));
+        return true;
         
     }
     
