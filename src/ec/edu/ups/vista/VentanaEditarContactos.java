@@ -5,7 +5,7 @@
  */
 package ec.edu.ups.vista;
 
-import ec.edu.ups.controlador.Controlador;
+import ec.edu.ups.controlador.ControladorPersona;
 import ec.edu.ups.modelo.Persona;
 import ec.edu.ups.modelo.Telefono;
 import javax.swing.JOptionPane;
@@ -19,12 +19,12 @@ public class VentanaEditarContactos extends javax.swing.JFrame {
     /**
      * Creates new form VentanaEditarContactos
      */
-    private Controlador controlador;
+    private ControladorPersona controladorPersona;
     private Persona persona;
     
-    public VentanaEditarContactos(Controlador controlador) {
+    public VentanaEditarContactos(ControladorPersona controladorPersona) {
         initComponents();
-        this.controlador = controlador;
+        this.controladorPersona = controladorPersona;
         this.persona = new Persona();
         
     }
@@ -316,10 +316,10 @@ public class VentanaEditarContactos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Porfavor rellene todos los campos");
 
         } else {
-            Telefono telefono = new Telefono(jTextFieldNumero.getText(), jTextFieldOperadora.getText(), jTextFieldTipo.getText());
-            Persona persona = new Persona(jTextFieldCedula.getText(), jTextFieldNombre.getText(), jTextFieldApellido.getText(), jTextFieldDireccion.getText(), telefono);
+            Telefono telefono = new Telefono(this.persona.getTelefono().getId(), jTextFieldNumero.getText(), jTextFieldOperadora.getText(), jTextFieldTipo.getText());
+            Persona persona = new Persona(this.persona.getId(),jTextFieldCedula.getText(), jTextFieldNombre.getText(), jTextFieldApellido.getText(), jTextFieldDireccion.getText(), telefono);
 
-            if(controlador.actualizar(persona)) {
+            if(controladorPersona.actualizar(persona)) {
                 JOptionPane.showMessageDialog(this, "Contacto actualizado con exito");
                 this.dispose();
 
@@ -347,7 +347,7 @@ public class VentanaEditarContactos extends javax.swing.JFrame {
         // TODO add your handling code here:
         int respuesta = JOptionPane.showConfirmDialog(this, "Esta eguro que decea eliminar este contacto");
         if (respuesta == JOptionPane.YES_OPTION) {
-            controlador.eliminar(this.persona);
+            controladorPersona.eliminar(this.persona);
             JOptionPane.showMessageDialog(this, "El Contacto se ha eliminado con exito");
             this.dispose();
         }

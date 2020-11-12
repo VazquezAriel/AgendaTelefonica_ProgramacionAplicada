@@ -5,8 +5,8 @@
  */
 package ec.edu.ups.vista;
 
-import ec.edu.ups.controlador.Controlador;
-import ec.edu.ups.modelo.Persona;
+import ec.edu.ups.controlador.ControladorPersona;
+import ec.edu.ups.controlador.ControladorTelefono;
 
 /**
  *
@@ -18,18 +18,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     
+    //Ventanas
     private VentanaPersona ventanaPersona;
     private VentanaContactosRegistrados ventanaContactosRegistrados;
-    private Controlador<Persona> controlador;
     private VentanaEditarContactos ventanaEditarContactos;
+    
+    //Controladores
+    private ControladorPersona controladorPersona;
+    private ControladorTelefono controladorTelefono;
     
     public VentanaPrincipal() {
         initComponents();
         
-        controlador = new Controlador();
-        ventanaPersona = new VentanaPersona(controlador);
-        ventanaEditarContactos = new VentanaEditarContactos(controlador);
-        ventanaContactosRegistrados = new VentanaContactosRegistrados(controlador, ventanaEditarContactos);
+        controladorPersona = new ControladorPersona();
+        controladorTelefono = new ControladorTelefono();
+        
+        ventanaPersona = new VentanaPersona(controladorPersona, controladorTelefono);
+        ventanaEditarContactos = new VentanaEditarContactos(controladorPersona);
+        ventanaContactosRegistrados = new VentanaContactosRegistrados(controladorPersona, ventanaEditarContactos);
+        
     }
 
     /**

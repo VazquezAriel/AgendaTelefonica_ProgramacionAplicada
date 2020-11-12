@@ -5,7 +5,7 @@
  */
 package ec.edu.ups.vista;
 
-import ec.edu.ups.controlador.Controlador;
+import ec.edu.ups.controlador.ControladorPersona;
 import ec.edu.ups.modelo.Persona;
 import ec.edu.ups.modelo.Telefono;
 import java.util.List;
@@ -21,25 +21,23 @@ public class VentanaContactosRegistrados extends javax.swing.JFrame {
     /**
      * Creates new form VentanaContactosRegistarados
      */
-    private Controlador controlador;
+    private ControladorPersona controladorPersona;
     private VentanaEditarContactos ventanaEditarContactos;
 
-    public VentanaContactosRegistrados(Controlador controlador, VentanaEditarContactos ventanaEditarContactos) {
+    public VentanaContactosRegistrados(ControladorPersona controladorPersona, VentanaEditarContactos ventanaEditarContactos) {
         initComponents();
 
-        this.controlador = controlador;
+        this.controladorPersona = controladorPersona;
         this.ventanaEditarContactos = ventanaEditarContactos;
     }
 
     public void cargarDatos() {
         DefaultTableModel modelo = (DefaultTableModel) jTableContactos.getModel();
         modelo.setRowCount(0);
-
-        for (Object object : controlador.listar()) {
+        for (Object object : controladorPersona.getListado()) {
             Persona persona = (Persona) object;
-            Object[] rowData = {persona.getCedula(), persona.getNombre(), persona.getApellido(), persona.getDireccion(), persona.getTelefono()};
+            Object[] rowData = {persona.getId(), persona.getCedula(), persona.getNombre(), persona.getApellido(), persona.getDireccion(), persona.getTelefono()};
             modelo.addRow(rowData);
-
         }
         jTableContactos.setModel(modelo);
     }
@@ -76,14 +74,14 @@ public class VentanaContactosRegistrados extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cedula", "Nombre", "Apellido", "Direccion", "Telefono"
+                "ID", "Nombre", "Apellido", "Cedula", "Direccion", "Telefono"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -100,6 +98,9 @@ public class VentanaContactosRegistrados extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableContactos);
+        if (jTableContactos.getColumnModel().getColumnCount() > 0) {
+            jTableContactos.getColumnModel().getColumn(0).setPreferredWidth(20);
+        }
 
         jComboBoxCondicion.setFont(new java.awt.Font("Georgia", 0, 13)); // NOI18N
         jComboBoxCondicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Apellido", "Numero" }));
@@ -194,50 +195,38 @@ public class VentanaContactosRegistrados extends javax.swing.JFrame {
         List personasEncontradas;
 
         if (jComboBoxCondicion.getSelectedItem().toString().equals("Apellido")) {
-            personasEncontradas = controlador.buscar(new Persona("", "", jTextFieldBusqueda.getText(), "", null));
-
+            personasEncontradas = controladorPersona.buscarPorApellido(jTextFieldBusqueda.getText());
             if (personasEncontradas.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontraron Contactos con ese apellido");
-
             } else {
-
                 for (Object object : personasEncontradas) {
                     Persona persona = (Persona) object;
                     Object[] rowData = {persona.getCedula(), persona.getNombre(), persona.getApellido(), persona.getDireccion(), persona.getTelefono()};
                     modelo.addRow(rowData);
-
                 }
                 jTableContactos.setModel(modelo);
-
             }
-
         } else {
-            personasEncontradas = controlador.listar();
-
+            personasEncontradas = controladorPersona.buscarPorNumero(jTextFieldBusqueda.getText());
             if (personasEncontradas.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontraron Contactos con ese numero");
-
             } else {
                 for (Object object : personasEncontradas) {
                     Persona persona = (Persona) object;
                     if (persona.getTelefono().getNumero().equals(jTextFieldBusqueda.getText())) {
                         Object[] rowData = {persona.getCedula(), persona.getNombre(), persona.getApellido(), persona.getDireccion(), persona.getTelefono()};
                         modelo.addRow(rowData);
-
                     }
                     jTableContactos.setModel(modelo);
-
                 }
-
             }
-
         }
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jTableContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableContactosMouseClicked
         // TODO add your handling code here:
         int filaIndex = jTableContactos.getSelectedRow();
-        Persona persona = new Persona(jTableContactos.getValueAt(filaIndex, 0).toString(), jTableContactos.getValueAt(filaIndex, 1).toString(), jTableContactos.getValueAt(filaIndex, 2).toString(), jTableContactos.getValueAt(filaIndex, 3).toString(), (Telefono) jTableContactos.getValueAt(filaIndex, 4));
+        Persona persona = new Persona((int)jTableContactos.getValueAt(filaIndex, 0),jTableContactos.getValueAt(filaIndex, 1).toString(), jTableContactos.getValueAt(filaIndex, 2).toString(), jTableContactos.getValueAt(filaIndex, 3).toString(), jTableContactos.getValueAt(filaIndex, 4).toString(), (Telefono) jTableContactos.getValueAt(filaIndex, 5));
         ventanaEditarContactos.setPersona(persona);
         ventanaEditarContactos.cargarDatos();
         ventanaEditarContactos.setVisible(true);

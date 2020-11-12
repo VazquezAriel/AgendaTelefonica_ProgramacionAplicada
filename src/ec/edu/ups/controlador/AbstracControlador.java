@@ -7,37 +7,31 @@ package ec.edu.ups.controlador;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  *
  * @author ariel
  */
-public class Controlador <T>{
+public abstract class AbstracControlador<T> {
     
-     private List<T> listado;
-     private int tamaño;
+    private List<T> listado;
 
-    public Controlador() {
+    public AbstracControlador() {
         listado = new ArrayList();
-        tamaño = 0;
-        
     }
-
-    public Controlador(List<T> listado, int tamaño) {
-        this.listado = listado;
-        this.tamaño = tamaño;
-        
-    }
+    
+    public abstract boolean validar(T objeto);
     
     public boolean crear(T objeto) {
-         return listado.add(objeto);
-        
+        if (validar(objeto)) {
+            return listado.add(objeto);
+        } 
+        return false;
     }
     
-    public List<T> buscar(T objetoBuscado){
-        return listado.stream().filter(objeto -> objeto.equals(objetoBuscado)).collect(Collectors.toList());
-        
+    public T buscar(T objetoBuscado){
+        return listado.stream().filter(objeto -> objeto.equals(objetoBuscado)).findFirst().orElse(null);
     }
     
     public boolean actualizar(T objetoActalizado) {
@@ -46,17 +40,26 @@ public class Controlador <T>{
                 listado.set(listado.indexOf(objeto), objetoActalizado);
                 return true;
             }
-            
         }
         return false;
     }
     
     public boolean eliminar(T objeto) {
         return listado.remove(objeto);
-        
     }
     
-    public List<T> listar() {
+    public int generarId() {
+        if(listado.size() > 0) {
+            return listado.indexOf(listado.get(listado.size() - 1 )) + 1;
+        }
+        return 1;
+    }
+    
+    public List<T> getListado() {
         return listado;
+    }
+
+    public void setListado(List<T> listado) {
+        this.listado = listado;
     }
 }

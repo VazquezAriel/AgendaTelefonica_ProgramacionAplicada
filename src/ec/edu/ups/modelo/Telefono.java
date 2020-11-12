@@ -5,7 +5,6 @@
  */
 package ec.edu.ups.modelo;
 
-import java.util.Objects;
 
 /**
  *
@@ -13,18 +12,21 @@ import java.util.Objects;
  */
 public class Telefono {
     
+    private int id;
     private String numero;
     private String operadora;
     private String tipo;
 
     public Telefono() {
+        id = -1;
         numero = "";
         operadora = "";
         tipo = "";
         
     }
 
-    public Telefono(String numero, String operadora, String tipo) {
+    public Telefono(int id, String numero, String operadora, String tipo) {
+        this.id = id;
         this.numero = numero;
         this.operadora = operadora;
         this.tipo = tipo;
@@ -54,10 +56,18 @@ public class Telefono {
         this.tipo = tipo;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.numero);
+        int hash = 5;
+        hash = 23 * hash + this.id;
         return hash;
     }
 
@@ -73,12 +83,12 @@ public class Telefono {
             return false;
         }
         final Telefono other = (Telefono) obj;
-        if (!Objects.equals(this.numero, other.numero)) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return numero;

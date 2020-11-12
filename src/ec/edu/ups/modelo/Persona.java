@@ -5,8 +5,7 @@
  */
 package ec.edu.ups.modelo;
 
-import java.util.Objects;
-
+import ec.edu.ups.controlador.ControladorTelefono;
 
 /**
  *
@@ -14,6 +13,7 @@ import java.util.Objects;
  */
 public class Persona {
     
+    private int id;
     private String cedula;
     private String nombre;
     private String apellido;
@@ -21,6 +21,7 @@ public class Persona {
     private Telefono telefono;
 
     public Persona() {
+        this.id = -1;
         this.cedula = "";
         this.nombre = "";
         this.apellido = "";
@@ -29,7 +30,8 @@ public class Persona {
         
     }
 
-    public Persona(String cedula, String nombre, String apellido, String direccion, Telefono telefono) {
+    public Persona(int id, String cedula, String nombre, String apellido, String direccion, Telefono telefono) {
+        this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -76,11 +78,18 @@ public class Persona {
     public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.apellido);
+        int hash = 3;
+        hash = 97 * hash + this.id;
         return hash;
     }
 
@@ -96,12 +105,12 @@ public class Persona {
             return false;
         }
         final Persona other = (Persona) obj;
-        if (!Objects.equals(this.apellido, other.apellido)) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "Persona{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", telefono=" + telefono + '}';
