@@ -8,32 +8,36 @@ package ec.edu.ups.controlador;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author ariel
  */
 public abstract class AbstracControlador<T> {
-    
+
     private List<T> listado;
 
     public AbstracControlador() {
         listado = new ArrayList();
     }
-    
+
     public abstract boolean validar(T objeto);
-    
+
     public boolean crear(T objeto) {
-        if (validar(objeto)) {
-            return listado.add(objeto);
-        } 
-        return false;
+        try {
+            if (validar(objeto)) {
+                return listado.add(objeto);
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    
-    public T buscar(T objetoBuscado){
+
+    public T buscar(T objetoBuscado) {
         return listado.stream().filter(objeto -> objeto.equals(objetoBuscado)).findFirst().orElse(null);
     }
-    
+
     public boolean actualizar(T objetoActalizado) {
         for (T objeto : listado) {
             if (objeto.equals(objetoActalizado)) {
@@ -43,18 +47,18 @@ public abstract class AbstracControlador<T> {
         }
         return false;
     }
-    
+
     public boolean eliminar(T objeto) {
         return listado.remove(objeto);
     }
-    
+
     public int generarId() {
-        if(listado.size() > 0) {
-            return listado.indexOf(listado.get(listado.size() - 1 )) + 1;
+        if (listado.size() > 0) {
+            return listado.indexOf(listado.get(listado.size() - 1)) + 1;
         }
         return 1;
     }
-    
+
     public List<T> getListado() {
         return listado;
     }
@@ -62,7 +66,7 @@ public abstract class AbstracControlador<T> {
     public void setListado(List<T> listado) {
         this.listado = listado;
     }
-    
+
     public void imprimirListadoEnConsola() {
         listado.forEach(System.out::println);
     }

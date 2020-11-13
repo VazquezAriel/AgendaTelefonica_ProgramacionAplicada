@@ -5,6 +5,7 @@
  */
 package ec.edu.ups.controlador;
 
+import ec.edu.ups.excepciones.CedulaIncorrecta;
 import ec.edu.ups.modelo.Persona;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,12 +16,6 @@ import java.util.stream.Collectors;
  */
 public class ControladorPersona extends AbstracControlador<Persona>{
 
-    @Override
-    public boolean validar(Persona persona) {
-        return true;
-        
-    }
-    
     public List<Persona> buscarPorApellido(String apellido){
         return getListado().stream().filter(persona -> persona.getApellido().equals(apellido)).collect(Collectors.toList());
         
@@ -30,6 +25,14 @@ public class ControladorPersona extends AbstracControlador<Persona>{
         return getListado().stream().filter(persona -> persona.getTelefono().getNumero().equals(numero)).collect(Collectors.toList());
         
     }
-    
+
+    @Override
+    public boolean validar(Persona persona) throws Exception {
+        if (persona.getCedula().length() != 10) {
+            throw new CedulaIncorrecta("El tamaño de la cedula es incorrecto");
+        } else {
+           return true; 
+        }
+    }
     
 }

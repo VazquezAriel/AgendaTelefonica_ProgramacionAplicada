@@ -22,7 +22,7 @@ public class Main {
         ControladorTelefono telefonos = new ControladorTelefono();
         
         Persona p1 = new Persona(0, "0302610076", "Ariel", "Vazquez", "Av de los alcaldes", new Telefono());
-        Persona p2 = new Persona(1, "0302610075", "Renato", "Calle", "Av 24 de mayo", new Telefono());
+        Persona p2 = new Persona(1, "030275", "Renato", "Calle", "Av 24 de mayo", new Telefono());
         Persona p3 = new Persona(2, "0302610072", "Adriana", "Gomez", "Azogues", new Telefono());
         Persona p4 = new Persona(2, "0302610070", "Erika", "Castro", "Cuenca", new Telefono());
 
@@ -45,13 +45,5 @@ public class Main {
         System.out.println("");
         telefonos.imprimirListadoEnConsola();
         System.out.println("");
-        
-        Persona p5 = new Persona();
-        p5.setId(5);
-        
-        
-        
-        
     }
-    
 }
